@@ -13,21 +13,30 @@ import { StyleSheet, Text, View } from 'react-native';
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Hello!!!</Text>
-      <StatusBar style="auto" />
+      <View style={styles.yellowView}></View>
+      <View style={{flex: 4, backgroundColor: 'blue'}}></View>
+      {/* <StatusBar style="auto" /> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,    
+    flex: 1,  // all space is used.  
     backgroundColor: 'skyblue',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // native flexDirection default 'column'
+    // web flex-direction default 'row'
+    // flexDirection: 'row',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   text: {
+    flex: 1,
     color: 'white',
     fontSize: 100
+  },
+  yellowView: {
+    flex: 1,
+    backgroundColor: 'yellow'
   }
 });
