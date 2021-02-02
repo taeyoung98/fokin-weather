@@ -23,7 +23,14 @@ export default class extends React.Component {
       // ES6 JS - template strings
       `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${API_KEY}`
       );
-      this.setState({isLoading: false, temp, condition: weather[0].main})
+      console.log(weather[0].description);
+      this.setState({
+        isLoading: false, 
+        temp, 
+        condition: weather[0].main, 
+        description: weather[0].description, 
+        icon: weather[0].icon
+      });
     console.log(data);
   }
 
@@ -37,6 +44,7 @@ export default class extends React.Component {
       const { coords: { latitude, longitude } } = await Location.getCurrentPositionAsync();
       // Send to API and get weather
       this.getWeather(latitude, longitude);
+      console.log(latitude, longitude);
     } catch (error) {
       Alert.alert("Can't find you.", "So sad");
     }
@@ -47,7 +55,7 @@ export default class extends React.Component {
   }
 
   render() {
-    const { isLoading, temp, condition } = this.state;
-    return isLoading ? <Loading /> : <Weather temp={Math.round(temp)} condition={condition} />;
+    const { isLoading, temp, condition, description, icon } = this.state;
+    return isLoading ? <Loading /> : <Weather temp={Math.round(temp)} condition={condition} description={description} icon={icon} />;
   }
 }

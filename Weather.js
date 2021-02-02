@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { View, Text, StyleSheet, StatusBar } from "react-native";
+import { View, Text, StyleSheet, StatusBar, Image } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -17,7 +17,7 @@ const weatherOptions = {
         subTitle: "It's annoying"
     }, Rain: {
         iconName: "weather-pouring",
-        gradient: ["#3498db", "#2c3e50"],
+        gradient: ["#2c3e50", "#3498db"],
         title: "Rain",
         subTitle: "Try getting in the rain"
     }, Snow: {
@@ -83,8 +83,7 @@ const weatherOptions = {
     }
 }
 
-
-export default function Weather({ temp, condition }) {
+export default function Weather({ temp, condition, description, icon }) {
     return(
         <LinearGradient
         // Background Linear Gradient
@@ -92,11 +91,13 @@ export default function Weather({ temp, condition }) {
         style={styles.container} >
             <StatusBar barStyle="light-content" />
             <View style={styles.halfContainer}>
-                <MaterialCommunityIcons name={weatherOptions[condition].iconName || "weather-sunset"} size={90} color="white" />
+                {/* <MaterialCommunityIcons name={weatherOptions[condition].iconName || "weather-sunset"} size={90} color="white" /> */}
+                <Image source={{uri: `http://openweathermap.org/img/wn/${icon}@2x.png`}} style={{width: 170, height: 170}} />
                 <Text style={styles.temp}>{temp}°</Text>
             </View>
             <View style={{...styles.halfContainer, ...styles.textContainer}}>
-                <Text style={styles.title}>{weatherOptions[condition].title}</Text>
+                {/* <Text style={styles.title}>{weatherOptions[condition].title}</Text> */}
+                <Text style={styles.title}>{description}</Text>
                 <Text style={styles.subTitle}>{weatherOptions[condition].subTitle}</Text>
             </View>
         </LinearGradient>
@@ -129,12 +130,12 @@ const styles = StyleSheet.create({
 
     textContainer: {
         flex: 1,
-        alignItems: "flex-start",
-        // paddingHorizontal: 20
+        marginLeft: -50,
+        alignItems: "flex-start"
     },
     title: {
         fontWeight: "300",
-        fontSize: 44,
+        fontSize: 50,
         color: "white",
         marginBottom: 10 
     },
