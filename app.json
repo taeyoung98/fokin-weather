@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Nomad Coder - React Native로 날씨앱 만들기",
+    "githubUrl": "https://github.com/taeyoung98/fokin-weather"
   }
 }
