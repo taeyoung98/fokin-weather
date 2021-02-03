@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { View, Text, StyleSheet, StatusBar, Image } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
+import { FontAwesome5 } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const weatherOptions = {
@@ -83,7 +84,7 @@ const weatherOptions = {
     }
 }
 
-export default function Weather({ temp, condition, description, icon }) {
+export default function Weather({ temp, condition, description, icon, country, subregion, city, street }) {
     return(
         <LinearGradient
         // Background Linear Gradient
@@ -91,8 +92,10 @@ export default function Weather({ temp, condition, description, icon }) {
         style={styles.container} >
             <StatusBar barStyle="light-content" />
             <View style={styles.halfContainer}>
-                {/* <MaterialCommunityIcons name={weatherOptions[condition].iconName || "weather-sunset"} size={90} color="white" /> */}
-                <Image source={{uri: `http://openweathermap.org/img/wn/${icon}@2x.png`}} style={{width: 170, height: 170}} />
+                <Text style={styles.country}>{country}</Text>
+                <Text style={styles.city}>{city}, {street} <FontAwesome5 name="map-marker-alt" size={15} color="white" /></Text>
+                <MaterialCommunityIcons name={weatherOptions[condition].iconName || "weather-sunset"} size={90} color="white" />
+                {/* <Image source={{uri: `http://openweathermap.org/img/wn/${icon}@2x.png`}} style={{width: 170, height: 170}} /> */}
                 <Text style={styles.temp}>{temp}°</Text>
             </View>
             <View style={{...styles.halfContainer, ...styles.textContainer}}>
@@ -109,7 +112,13 @@ Weather.PropTypes = {
     condition: PropTypes.oneOf([
         "ThunderStrom", "Drizzle", "Rain", "Snow", "Clear", "Clouds", 
         "Mist", "Smoke", "Haze", "Dust", "Fog", "Sand", "Ash", "Squall", "Tornado"
-    ]).isRequired
+    ]).isRequired,
+    description: PropTypes.string.isRequired,
+    icon: PropTypes.string,
+    country: PropTypes.string.isRequired,
+    subregion: PropTypes.string,
+    city: PropTypes.string.isRequired,
+    street: PropTypes.string
 }
 
 const styles = StyleSheet.create({
@@ -123,9 +132,20 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center"
     },
+    country: {
+        fontSize: 15,
+        color: "white"
+    },
+    city: {
+        fontSize: 20,
+        color: "white",
+        marginTop: 2,
+        marginBottom: 30
+    },
     temp: {
         fontSize: 40,
-        color: "white"
+        color: "white",
+        marginTop: 10
     },
 
     textContainer: {
@@ -140,7 +160,7 @@ const styles = StyleSheet.create({
         marginBottom: 10 
     },
     subTitle: {
-        fontWeight: "600",
+        fontWeight: "500",
         fontSize: 24,
         color: "white"
     }

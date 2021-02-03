@@ -17,12 +17,13 @@ export default class extends React.Component {
       data: {
         main: {temp},
         weather
-      } 
+      }, data 
     } = await axios.get(
       // http:// required
       // ES6 JS - template strings
-      `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${API_KEY}`
+      `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`
       );
+      console.log(data);
       console.log(weather[0].description);
       this.setState({
         isLoading: false, 
@@ -45,6 +46,11 @@ export default class extends React.Component {
       // Send to API and get weather
       this.getWeather(latitude, longitude);
       console.log(latitude, longitude);
+
+      const { country, subregion, city, street } = (await Location.reverseGeocodeAsync({latitude, longitude}))[0];
+      console.log(country, subregion, city, street);
+      this.setState({ country, subregion, city, street });
+
     } catch (error) {
       Alert.alert("Can't find you.", "So sad");
     }
@@ -55,7 +61,11 @@ export default class extends React.Component {
   }
 
   render() {
-    const { isLoading, temp, condition, description, icon } = this.state;
-    return isLoading ? <Loading /> : <Weather temp={Math.round(temp)} condition={condition} description={description} icon={icon} />;
+    const { 
+      isLoading, temp, condition, description, icon,
+      country, subregion, city, street
+    } = this.state;
+    return isLoading ? <Loading /> : <Weather temp={Math.round(temp)} condition={condition} description={description} icon={icon}
+                                              country={country} subregion={subregion} city={city} street={street} />;
   }
 }
